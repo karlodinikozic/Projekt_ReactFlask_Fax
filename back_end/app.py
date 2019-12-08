@@ -93,6 +93,34 @@ def getStudents():
     result = students_schema.dump(all_students)
     return jsonify(result)
 
+@app.route('/login',methods=['PUT'])
+def loginStudent():
+        JMBAG = request.json['JMBAG']
+     
+        studentUpdate = Student.query.get(JMBAG)
+
+        br_racunala = request.json['br_racunala'] 
+
+        studentUpdate.br_racunala = br_racunala
+        studentUpdate.is_logged_in = True
+        result = student_schema.dump(studentUpdate)
+        db.session.commit()
+        return jsonify(result)
+
+@app.route('/logOut',methods=['PUT'])
+def logOut():
+        JMBAG = request.json['JMBAG']
+        print(JMBAG)
+        studentUpdate = Student.query.get(JMBAG)
+        
+        studentUpdate.br_racunala = -1
+        studentUpdate.is_logged_in = False
+        db.session.commit()
+
+        return jsonify({"msg":"logged Out"})
+
+
+
 
 
 
