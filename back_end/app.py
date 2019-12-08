@@ -48,9 +48,15 @@ class StudentSchema(ma.Schema):
     class Meta:
         fields = ('JMBAG','ime','prezime','br_racunala','is_logged_in')
 
+
+#Studnets Loggin
+class LogginSchema(ma.Schema):
+    class Meta:
+        fields = ('JMBAG','br_racunala','is_logged_in')
+
 #init schema
 student_schema = StudentSchema()
-students_schema = StudentSchema(many=True)  
+students_schema = LogginSchema(many=True)  
 
 
 
