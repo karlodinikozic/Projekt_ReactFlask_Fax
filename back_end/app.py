@@ -73,6 +73,16 @@ def addStudent():
 
     return student_schema.jsonify(new_student)
 
+
+@app.route('/student',methods=['GET'])
+def getStudent():
+    JMBAG = request.json['JMBAG']
+    student = Student.query.filter_by(JMBAG = JMBAG)
+    result = student_schema.dump(student)
+    print(student)
+    return jsonify(result)
+
+
 @app.route('/student',methods=['DELETE'])
 def deleteStudent():
     JMBAG = request.json['JMBAG']
