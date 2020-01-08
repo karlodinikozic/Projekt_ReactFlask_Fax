@@ -6,7 +6,7 @@ import os
 
 
 app = Flask(__name__)
-CORS(app)
+cors =CORS(app)
 
 
 @app.route('/',methods=['GET'])
@@ -74,12 +74,10 @@ def addStudent():
     return student_schema.jsonify(new_student)
 
 
-@app.route('/student',methods=['GET'])
-def getStudent():
-    JMBAG = request.json['JMBAG']
-    student = Student.query.filter_by(JMBAG = JMBAG)
+@app.route('/student/<JMBAG>',methods=['GET'])
+def getStudent(JMBAG):
+    student = Student.query.get(JMBAG)
     result = student_schema.dump(student)
-    print(student)
     return jsonify(result)
 
 
@@ -87,7 +85,7 @@ def getStudent():
 def deleteStudent():
     JMBAG = request.json['JMBAG']
  
-    deletedstudent = Student.query.filter_by(JMBAG = JMBAG)
+    deletedstudent = Student.query.get(JMBAG)
     result = students_schema.dump(deletedstudent)
     deletedstudent.delete()
     db.session.commit()
@@ -106,7 +104,7 @@ def getStudents():
 @app.route('/login',methods=['PUT'])
 def loginStudent():
         JMBAG = request.json['JMBAG']
-     
+        print(JMBAG)
         studentUpdate = Student.query.get(JMBAG)
 
         br_racunala = request.json['br_racunala'] 
@@ -117,10 +115,9 @@ def loginStudent():
         db.session.commit()
         return jsonify(result)
 
-@app.route('/logOut',methods=['PUT'])
-def logOut():
-        JMBAG = request.json['JMBAG']
-        print(JMBAG)
+@app.route('/logOut/<JMBAG>',methods=['PUT'])
+def logOut(JMBAG):
+        
         studentUpdate = Student.query.get(JMBAG)
         
         studentUpdate.br_racunala = -1

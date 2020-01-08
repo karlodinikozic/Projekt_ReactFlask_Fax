@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react'
 import axios from 'axios'
-import PuniBazu from './PuniBazu';
+
 import {Redirect} from 'react-router-dom'
 
 function Login() {
@@ -13,7 +13,6 @@ function Login() {
       axios.get("http://127.0.0.1:5000/students")
       .then(res=>{
         setStudents(res.data)
-        console.log(res.data)
        
       })
     },[])
@@ -111,20 +110,12 @@ function Login() {
     
     }
     
-    const logOutHandler = ()=>{
-      const logOut = {
-        JMBAG: loggedIn.JMBAG,
-      }
-      axios.put("http://127.0.0.1:5000/logOut",logOut)
-      .then(res=>{
-        console.log(res.data)
-        setLoggedIn({})
-      })
-    }
+   
 
     
     return (
         <div>
+                <h1>Welcome!</h1>
           <div  style={loginStyle}>
           {students.length > 0?
         <div>
@@ -132,6 +123,7 @@ function Login() {
           <br/>
            Broj Racunala: <input  type="text" placeholder="Broj Racunala" onChange={e => setUserRacunalo(e.target.value)}/>
            <br/>
+            
            
           {loggedIn.is_logged_in?
          
@@ -149,7 +141,7 @@ function Login() {
           </div>
          
 
-      <PuniBazu/>
+      {/* <PuniBazu/> */}
        </div>
     )
 }
