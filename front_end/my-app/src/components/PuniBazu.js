@@ -21,7 +21,7 @@ function PuniBazu() {
         axios.post("http://127.0.0.1:5000/student",new_studnet)
         .then(res=>{
             console.log(res.data)
-            window.locat<ion.reload();
+            window.location.reload();
         })
     }
     
