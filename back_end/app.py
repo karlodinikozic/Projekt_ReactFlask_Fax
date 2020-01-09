@@ -36,6 +36,8 @@ class Student (db.Model):
     prezime  = db.Column(db.String(100))
     br_racunala = db.Column(db.Integer,default = -1)
     is_logged_in = db.Column(db.Boolean,unique = False, default = False)
+    needs_help = db.Column(db.Boolean,unique = False, default = False)
+    help_msg = db.Column(db.String)
     ## TODO DATE
 
     def __init__(self,JMBAG,ime,prezime):
@@ -46,7 +48,7 @@ class Student (db.Model):
 #Student Schema
 class StudentSchema(ma.Schema):
     class Meta:
-        fields = ('JMBAG','ime','prezime','br_racunala','is_logged_in')
+        fields = ('JMBAG','ime','prezime','br_racunala','is_logged_in','help_msg','needs_help')
 
 
 #Studnets Loggin
@@ -55,7 +57,7 @@ class LogginSchema(ma.Schema):
         fields = ('JMBAG','br_racunala','is_logged_in')
 
 #init schema
-student_schema = StudentSchema()
+student_schema = StudentSchema(many=True)
 students_schema = LogginSchema(many=True)  
 
 
@@ -125,6 +127,31 @@ def logOut(JMBAG):
         db.session.commit()
 
         return jsonify({"msg":"logged Out"})
+
+@app.route('/askhelp/<JMBAG>',methods=['PUT'])
+def askhelp(JMBAG):
+
+    msg = request.json['msg']
+    print(msg + " " + JMBAG)
+    
+    HelpStudent = Student.query.get(JMBAG)
+    print(HelpStudent)
+
+    HelpStudent.needs_help = True
+    HelpStudent.help_msg = msg
+    db.session.commit()
+
+    return jsonify({"msg":"Student " + HelpStudent.ime + " needs help!"})
+
+@app.route('/studentsNeedHelp',methods=['GET'])
+def studentsneedhelp():
+
+    studentsWhoNeedHelp = Student.query.filter(Student.needs_help == True).all()
+    result = student_schema.dump(studentsWhoNeedHelp)
+
+    return jsonify(result)
+
+
 
 
 

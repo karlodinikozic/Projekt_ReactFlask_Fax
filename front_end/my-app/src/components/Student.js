@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Redirect } from 'react-router-dom';
+import HelpButton from './HelpButton';
 
 function Student(props) {
     const JMBAG = props.location.state.JMBAG
     
     const [student,setStudent]=useState({});
+
 
 
     useEffect(()=>{
@@ -25,7 +27,7 @@ function Student(props) {
         axios.put("http://127.0.0.1:5000/logOut/" + JMBAG)
         .then(res=>{
             console.log(res.data)
-           props.history.push('/')
+            props.history.push('/')
         })
       }
     return (
@@ -33,13 +35,23 @@ function Student(props) {
             {
                 student.is_logged_in?
                 <div>
-                    <h1>Welcome {student.ime}!</h1>
-                    <button onClick={logOutHandler}>logOut</button>
+                    <h1 style={{borderBottom:"2px solid black"}}>Dobrodošli {student.ime}!</h1>
+                    <HelpButton JMBAG={JMBAG}/>
+                    <button style={LogOutButton} onClick={logOutHandler}>Log Out</button>
                 </div>
                 :null
             }
         </div>
     )
 }
+
+const LogOutButton = {
+    marginTop:"20px",
+    backgroundColor: "white",
+    color: "black",
+    border: "2px solid #008CBA",
+    padding : "10px" 
+}
+
 
 export default Student
