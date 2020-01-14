@@ -11,15 +11,14 @@ cors =CORS(app)
 
 @app.route('/',methods=['GET'])
 def get():
-    return jsonify({'msg':'Hello There'})
+    return jsonify({'msg':'Hello You'})
 
 
 # OS SPECIFIC PATH
 basedirectiory = os.path.abspath(os.path.dirname(__file__))
 
-
 #Database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+ os.path.join(basedirectiory,'db.sqlite')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://kdkman:Fakeaccunt1@kdkman.mysql.pythonanywhere-services.com:3306/kdkman$test'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 #Init db
@@ -58,7 +57,7 @@ class LogginSchema(ma.Schema):
 
 #init schema
 student_schema = StudentSchema(many=True)
-students_schema = LogginSchema(many=True)  
+students_schema = LogginSchema(many=True)
 
 
 
@@ -79,22 +78,25 @@ def addStudent():
 @app.route('/student/<JMBAG>',methods=['GET'])
 def getStudent(JMBAG):
     student = Student.query.get(JMBAG)
-    result = student_schema.dump(student)
+
+
+    result = {"JMBAG":JMBAG,"ime":student.ime,"prezime":student.prezime,"br_rac":student.br_racunala,
+    "is_logged_in":student.is_logged_in,"needs_help":student.needs_help,"help_msg":student.help_msg}
     return jsonify(result)
 
 
 @app.route('/student',methods=['DELETE'])
 def deleteStudent():
     JMBAG = request.json['JMBAG']
- 
+
     deletedstudent = Student.query.get(JMBAG)
-    result = students_schema.dump(deletedstudent)
+
     deletedstudent.delete()
     db.session.commit()
 
-   
-    return jsonify(result)
- 
+
+    return jsonify({"msg":"Student with JMBAG :"+JMBAG+" deleted"})
+
 
 
 @app.route('/students',methods=['GET'])
@@ -109,19 +111,19 @@ def loginStudent():
         print(JMBAG)
         studentUpdate = Student.query.get(JMBAG)
 
-        br_racunala = request.json['br_racunala'] 
+        br_racunala = request.json['br_racunala']
 
         studentUpdate.br_racunala = br_racunala
         studentUpdate.is_logged_in = True
-        result = student_schema.dump(studentUpdate)
+        result = {"JMBAG":JMBAG,"br_rac":studentUpdate.br_racunala,"is_logged_in":studentUpdate.is_logged_in,}
         db.session.commit()
         return jsonify(result)
 
 @app.route('/logOut/<JMBAG>',methods=['PUT'])
 def logOut(JMBAG):
-        
+
         studentUpdate = Student.query.get(JMBAG)
-        
+
         studentUpdate.br_racunala = -1
         studentUpdate.is_logged_in = False
         db.session.commit()
@@ -130,12 +132,9 @@ def logOut(JMBAG):
 
 @app.route('/askhelp/<JMBAG>',methods=['PUT'])
 def askhelp(JMBAG):
-
     msg = request.json['msg']
-    print(msg + " " + JMBAG)
-    
+
     HelpStudent = Student.query.get(JMBAG)
-    print(HelpStudent)
 
     HelpStudent.needs_help = True
     HelpStudent.help_msg = msg

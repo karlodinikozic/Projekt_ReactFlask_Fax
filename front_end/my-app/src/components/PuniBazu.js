@@ -18,7 +18,7 @@ function PuniBazu() {
         console.log("Podatci")
         console.log(new_studnet)
         console.log("odgovor")
-        axios.post("http://127.0.0.1:5000/student",new_studnet)
+        axios.post("https://kdkman.pythonanywhere.com/student",new_studnet)
         .then(res=>{
             console.log(res.data)
             window.locat<ion.reload();

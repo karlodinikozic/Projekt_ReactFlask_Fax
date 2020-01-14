@@ -10,7 +10,7 @@ function Login() {
     const [loggedIn,setLoggedIn]=useState({});
   
     useEffect (()=>{
-      axios.get("http://127.0.0.1:5000/students")
+      axios.get("https://kdkman.pythonanywhere.com/students")
       .then(res=>{
         setStudents(res.data)
        
@@ -92,7 +92,7 @@ function Login() {
       const validity = checkLogIn(logInObject);
       if(validity.valid){
     
-        axios.put("http://127.0.0.1:5000/login",logInObject)
+        axios.put("https://kdkman.pythonanywhere.com/login",logInObject)
         .then(res=>{
           setLoggedIn(res.data)
           console.log(res.data)

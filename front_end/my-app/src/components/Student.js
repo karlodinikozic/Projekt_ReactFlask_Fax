@@ -15,7 +15,7 @@ function Student(props) {
         const help = {
             JMBAG:props.location.state.JMBAG
         }
-        axios.get("http://127.0.0.1:5000/student/" + JMBAG)
+        axios.get("https://kdkman.pythonanywhere.com/student/" + JMBAG)
         .then(res =>{
             console.log("Student page")
             console.log(res.data)
@@ -24,7 +24,7 @@ function Student(props) {
     },[])
     const logOutHandler = ()=>{
        
-        axios.put("http://127.0.0.1:5000/logOut/" + JMBAG)
+        axios.put("https://kdkman.pythonanywhere.com/logOut/" + JMBAG)
         .then(res=>{
             console.log(res.data)
             props.history.push('/')

@@ -8,7 +8,7 @@ function HelpButton(props) {
         msg = {msg:msg}
         console.log(msg);
         //kreiraj rutu na koju šalješ json
-        axios.put("http://127.0.0.1:5000/askhelp/" + props.JMBAG, msg)
+        axios.put("https://kdkman.pythonanywhere.com/askhelp/" + props.JMBAG, msg)
         .then(res=>console.log(res.data))
         .catch(err=>console.log(err))
     }
