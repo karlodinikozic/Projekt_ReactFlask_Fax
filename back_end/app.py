@@ -57,8 +57,7 @@ class LogginSchema(ma.Schema):
         fields = ('JMBAG','br_racunala','is_logged_in')
 
 #init schema
-student_schema = StudentSchema()
-students_help_schema = StudentSchema(many=True)
+student_schema = StudentSchema(many=True)
 students_schema = LogginSchema(many=True)  
 
 
@@ -148,7 +147,7 @@ def askhelp(JMBAG):
 def studentsneedhelp():
 
     studentsWhoNeedHelp = Student.query.filter(Student.needs_help == True).all()
-    result = students_help_schema.dump(studentsWhoNeedHelp)
+    result = student_schema.dump(studentsWhoNeedHelp)
 
     return jsonify(result)
 
