@@ -2,6 +2,7 @@ import React,{useState,useEffect} from 'react'
 import axios from 'axios'
 
 import {Redirect} from 'react-router-dom'
+import PuniBazu from './PuniBazu';
 
 function Login() {
     const [userJMBAG, setuserJMBAG] = useState(0);
@@ -141,7 +142,7 @@ function Login() {
           </div>
          
 
-      {/* <PuniBazu/> */}
+      <PuniBazu/>
        </div>
     )
 }

@@ -21,7 +21,7 @@ function PuniBazu() {
         axios.post("https://kdkman.pythonanywhere.com/student",new_studnet)
         .then(res=>{
             console.log(res.data)
-            window.locat<ion.reload();
+            window.location.reload();
         })
     }
     
