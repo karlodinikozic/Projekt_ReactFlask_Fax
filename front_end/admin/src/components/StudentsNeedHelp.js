@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import PopUp from './PopUp'
-import { Container } from 'react-bootstrap'
+import { Container, Button } from 'react-bootstrap'
 
 function StudentsNeedHelp() {
     const [studentsNeedHelp, setStudentsNeedHelp] = useState([])
@@ -25,7 +25,7 @@ function StudentsNeedHelp() {
     return (
         <Container>
             <div>
-                <button onClick={checkNewStudents}>Check if students need help</button>
+                <Button onClick={checkNewStudents}>Check if students need help</Button>
             </div>
             {
                 studentsNeedHelp.length>0?
@@ -40,12 +40,7 @@ function StudentsNeedHelp() {
     )
 }
 
-const Alert = {
-    border : "5px solid red",
-    margin : "10px auto",
-    padding: "10 px",
-    width: "50%",
-    color:"white",
-    backgroundColor:'red'
+const Alert = {   
+    color:"Red",
 }
 export default StudentsNeedHelp

@@ -13,10 +13,8 @@ function HomePage() {
     )
 }
 const container = {
-    maring:"0 auto ",
     padding: "10",
     border:"1px solid black",
-    width:"960px",
 
 }
 export default HomePage
