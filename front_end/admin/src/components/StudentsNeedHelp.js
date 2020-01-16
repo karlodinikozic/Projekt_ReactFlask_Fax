@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import PopUp from './PopUp'
 
 function StudentsNeedHelp() {
     const [studentsNeedHelp, setStudentsNeedHelp] = useState([])
     const [callEvery10,setCallEvery10] = useState({})
+
     useEffect(()=>{
         
         checkNewStudents()
@@ -17,6 +19,8 @@ function StudentsNeedHelp() {
             setStudentsNeedHelp(res.data)}
         )
     }
+
+
     return (
         <div>
             <div>
@@ -26,9 +30,10 @@ function StudentsNeedHelp() {
                 studentsNeedHelp.length>0?
                 <div style={Alert}>
                     {studentsNeedHelp.length} treba pomoć
-                    
+                  <PopUp students = {studentsNeedHelp}/>
                 </div>:
                 <h2>Nema studenta kojima treba pomoć</h2>
+                
             }
         </div>
     )
