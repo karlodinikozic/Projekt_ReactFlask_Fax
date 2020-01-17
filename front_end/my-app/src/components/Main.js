@@ -3,10 +3,12 @@ import Login from './Login'
 import Header from './Header'
 import {Link,Route,BrowserRouter as Router, Switch} from 'react-router-dom'
 import Student from './Student'
+import {Container} from 'react-bootstrap'
 
 function Main() {
     return (
-      <div>
+      <Container>
+        
       <Router>
        
        <Switch>
@@ -16,7 +18,7 @@ function Main() {
        </Switch>
        
       </Router>
-      </div>
+      </Container>
     )
 }
 

@@ -67,12 +67,13 @@ def addStudent():
     ime = request.json['ime']
     prezime = request.json['prezime']
 
+    print(JMBAG)
     new_student = Student(JMBAG,ime,prezime)
 
     db.session.add(new_student)
     db.session.commit()
 
-    return student_schema.jsonify(new_student)
+    return {"Add student msg": "Student with JMBAG: "+JMBAG +" added"}
 
 
 @app.route('/student/<JMBAG>',methods=['GET'])
