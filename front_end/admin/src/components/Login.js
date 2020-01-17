@@ -85,7 +85,7 @@ function Login(props) {
                     <Form.Group as={Col} md="6" controlId="validationFormik02">
                         <Form.Label>Password</Form.Label>
                         <Form.Control
-                            type="text"
+                            type="password"
                             placeholder="Password"
                             name="password"
                             value={values.password}
